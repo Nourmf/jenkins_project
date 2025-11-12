@@ -8,7 +8,7 @@ pipeline {
         stage('Setup') {
             steps {
                 script {
-                    bat "\"C:\\Users\\nour\\AppData\\Local\\Programs\\Python\\Python310\\python.exe\" -m myenv ${VIRTUAL_ENV}"
+                    bat "\"C:\\Users\\nour\\AppData\\Local\\Programs\\Python\\Python310\\python.exe\" -m venv ${VIRTUAL_ENV}"
                     bat "call ${VIRTUAL_ENV}\\Scripts\\activate && ${VIRTUAL_ENV}\\Scripts\\python.exe -m pip install --upgrade pip"
                     bat "call ${VIRTUAL_ENV}\\Scripts\\activate && pip install -r requirements.txt"
                 }
