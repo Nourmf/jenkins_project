@@ -1,15 +1,14 @@
 pipeline {
     agent any
     environment { 
-        VIRTUAL_ENV = 'venv'
+        VIRTUAL_ENV = 'myenv'
     }
 
     stages {
         stage('Setup') {
             steps {
                 script {
-                    // Create virtual environment and install dependencies
-                    bat "\"C:\\Users\\nour\\AppData\\Local\\Programs\\Python\\Python310\\python.exe\" -m venv ${VIRTUAL_ENV}"
+                    bat "\"C:\\Users\\nour\\AppData\\Local\\Programs\\Python\\Python310\\python.exe\" -m myenv ${VIRTUAL_ENV}"
                     bat "call ${VIRTUAL_ENV}\\Scripts\\activate && ${VIRTUAL_ENV}\\Scripts\\python.exe -m pip install --upgrade pip"
                     bat "call ${VIRTUAL_ENV}\\Scripts\\activate && pip install -r requirements.txt"
                 }
@@ -34,18 +33,18 @@ pipeline {
             }
         }
 
-        stage('Security Scan') {
+        stage('Security') {
             steps {
                 bat '''
                 chcp 65001
-                call venv\\Scripts\\activate
+                call myenv\\Scripts\\activate
                 bandit -r . > bandit_report.txt
                 type bandit_report.txt
                 '''
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy Locally') {
             steps {
                 echo "Deploying application..."
             }
